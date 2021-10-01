@@ -11,11 +11,14 @@ namespace MitchellCodeChallenge_WebAPI.Models
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(4)]
+        //[MaxLength(4)]
         public int Year { get; set; }
         [Column(TypeName = "nvarchar(100)")]
+        [Required]
         public string Make { get; set; }
+
         [Column(TypeName = "nvarchar(100)")]
+        [Required]
         public string Model { get; set; }
     }
 }
