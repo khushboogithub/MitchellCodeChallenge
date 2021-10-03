@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import * as actions from "../actions/vehicle";
 import React,{useState,useEffect} from "react";
-import { Grid,Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,withStyles } from "@material-ui/core";
+import { Grid,Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,withStyles,ButtonGroup,Button } from "@material-ui/core";
 import VehicleForm from "./VehicleForm";
-import EditIcon from "@material-ui/EditIcon"
-import DeleteIcon from "@material-ui/DeleteIcon"
+import EditIcon from "@material-ui/icons/Edit"
+import DeleteIcon from "@material-ui/icons/Delete"
 import { useToasts } from "react-toast-notifications";
 
 
@@ -71,7 +71,7 @@ const Vehicle = ({classes,...props}) => {
                                                         <Button>
                                                             <DeleteIcon 
                                                             color="secondary"
-                                                            onClick={() => OfflineAudioCompletionEvent(record.id)} />
+                                                            onClick={() => onDelete(record.id)} />
                                                         </Button>
                                                     </ButtonGroup>
                                                 </TableCell>

@@ -15,7 +15,6 @@ function App() {
             <Vehicle />
         </Container>
       </ToastProvider>
-        <Vehicle />
     </Provider>
   );
 }

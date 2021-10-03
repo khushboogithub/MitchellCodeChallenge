@@ -23,7 +23,7 @@ const  styles = theme => ({
 const initialFieldValues = {
     year : '',
     make:'',
-    mode:''
+    model:''
 }
 
 const VehicleForm = ({classes,...props}) => {
@@ -63,18 +63,20 @@ const VehicleForm = ({classes,...props}) => {
             if(props.currentId==0)
                 props.createVehicle(values,onSuccess)
             else
-                props.updateVehicle(props.currentId,onSuccess)
+                props.updateVehicle(props.currentId,values,onSuccess)
         }
 
     }
 
     useEffect(() => {
-        if (props.currentId !=0)
+        if (props.currentId !=0) {
         setValues({
             ...props.vehicleList.find(x=>x.id==props.currentId)
         })
         setErrors({})
-    })
+        }
+        
+    },[props.currentId])
 
     return (
         <form autoComplete="off" className = {classes.root} noValidate onSubmit={handleSubmit}>
@@ -121,8 +123,6 @@ const VehicleForm = ({classes,...props}) => {
                             onClick={resetForm}>
                                 RESET
                         </Button>
-
-
                     </div>
                 </Grid>
                 <Grid item xs={6}></Grid>
