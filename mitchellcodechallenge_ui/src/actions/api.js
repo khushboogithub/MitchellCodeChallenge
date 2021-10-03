@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const baseUrl ="http://localhost:3000/api/"
+const baseUrl ="http://localhost:50905/api/"
 
 export default{
-    vehicle(url=baseUrl+'vehicle/'){
+    vehicle(url=baseUrl+'Vehicles/'){
         return{
             fetchAll:() => axios.get(url),
             fetchById : id => axios.get(url+id),
-            create : newRecord=> axios.post(url,newRecord),
+            create : newRecord => axios.post(url,newRecord),
             update:(id,updateRecord) => axios.put(url+id,updateRecord),
-            delete:id=> axios.delete(url+id)
+            delete:id => axios.delete(url+id)
         }
     }
 }

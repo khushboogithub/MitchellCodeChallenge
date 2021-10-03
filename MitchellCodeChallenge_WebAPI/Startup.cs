@@ -38,9 +38,10 @@ namespace MitchellCodeChallenge_WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseCors(options => options.WithOrigins("http://localhost:3000/")
+            app.UseCors(options => options.WithOrigins("http://localhost:3000")
             .AllowAnyHeader()
             .AllowAnyMethod());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
