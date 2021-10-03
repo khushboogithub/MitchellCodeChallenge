@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 
-const CommonForm = (initialFieldValues) =>{
+const CommonForm = (initialFieldValues,validate,setCurrentId) =>{
     const [values,setValues] = useState(initialFieldValues)
     const [errors,setErrors] = useState({})
 
@@ -11,12 +11,21 @@ const CommonForm = (initialFieldValues) =>{
             [name] : value
         })
     }
+
+    const resetForm = () =>{
+        setValues({
+            ...initialFieldValues
+        })
+        setErrors({})
+        setCurrentId(0)
+    }
     return {
         values,
         setValues,
         errors,
         setErrors,
-        handleInputChange
+        handleInputChange,
+        resetForm
     };
 }
 

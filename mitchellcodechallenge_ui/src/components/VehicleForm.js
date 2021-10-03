@@ -1,8 +1,9 @@
 import { Button, Grid, TextField,withStyles } from "@material-ui/core";
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import CommonForm from "./CommonForm";
 import {connect} from "react-redux";
 import * as actions from "../actions/vehicle";
+import { useToasts } from "react-toast-notifications";
 
 
 const  styles = theme => ({
@@ -27,6 +28,9 @@ const initialFieldValues = {
 
 const VehicleForm = ({classes,...props}) => {
 
+    //toast messages
+    const { addToast } = useToasts()
+
     const validate =()=> {
         let temp={}
         temp.make=values.make?"":" This field is required."
@@ -45,16 +49,32 @@ const VehicleForm = ({classes,...props}) => {
         setValues,
         errors,
         setErrors,
-        handleInputChange
-    } = CommonForm(initialFieldValues)
+        handleInputChange,
+        resetForm
+    } = CommonForm(initialFieldValues,validate,props.setCurrentId)
 
     const handleSubmit=e=>{
         e.preventDefault()
         if(validate()){
-            props.createVehicle(values,() => {window.alert('Record is Inserted.')})
-
+            const onSuccess = () => {        
+                resetForm()
+                addToast("Submitted Successfully",{appearance:'success'})
+            }
+            if(props.currentId==0)
+                props.createVehicle(values,onSuccess)
+            else
+                props.updateVehicle(props.currentId,onSuccess)
         }
+
     }
+
+    useEffect(() => {
+        if (props.currentId !=0)
+        setValues({
+            ...props.vehicleList.find(x=>x.id==props.currentId)
+        })
+        setErrors({})
+    })
 
     return (
         <form autoComplete="off" className = {classes.root} noValidate onSubmit={handleSubmit}>
@@ -97,7 +117,8 @@ const VehicleForm = ({classes,...props}) => {
                         </Button>
                         <Button
                             variant = "contained"
-                            className={classes.smMargin}>
+                            className={classes.smMargin}
+                            onClick={resetForm}>
                                 RESET
                         </Button>
 
