@@ -1,9 +1,11 @@
 import { Button, Grid, TextField,withStyles } from "@material-ui/core";
-import React,{useEffect, useState} from "react";
+import React,{Fragment, useEffect, useState} from "react";
 import CommonForm from "./CommonForm";
 import {connect} from "react-redux";
 import * as actions from "../actions/vehicle";
 import { useToasts } from "react-toast-notifications";
+import { DateTimePicker,MuiPickersUtilsProvider,DatePicker  } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 
 const  styles = theme => ({
@@ -21,7 +23,8 @@ const  styles = theme => ({
 
 
 const initialFieldValues = {
-    year : '',
+    //year : '',
+    year : new Date(),
     make:'',
     model:''
 }
@@ -35,7 +38,8 @@ const VehicleForm = ({classes,...props}) => {
         let temp={}
         temp.make=values.make?"":" This field is required."
         temp.model=values.model?"":" This field is required."
-        temp.year=(/^[0-9]{4}$/).test(values.year)?"":"Year is required and should only be in numbers."
+        //temp.year=(/^[0-9]{4}$/).test(values.year)?"":"Year is required and should only be in numbers."
+        temp.year=values.year?"":" This field is required."
 
         setErrors({
             ...temp
@@ -43,7 +47,7 @@ const VehicleForm = ({classes,...props}) => {
 
         return Object.values(temp).every(x=>x=="")
     }
-
+// console..loaskjdflkasjflkj
     const {
         values,
         setValues,
@@ -82,7 +86,24 @@ const VehicleForm = ({classes,...props}) => {
         <form autoComplete="off" className = {classes.root} noValidate onSubmit={handleSubmit}>
             <Grid container>
                 <Grid item xs ={6}>
-                    <TextField 
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <DatePicker 
+                            name="year"
+                            variant="outlined"
+                            
+                            label="Year"
+                            value={values.year}
+                            onChange={value => handleInputChange({ target: { value: value, name: 'year' } })}
+                            views={["year"]}
+                            minDate="1951"
+                            maxDate="2051"
+                            error={true}
+                            helperText={errors.year}
+                        />
+                </MuiPickersUtilsProvider>
+
+
+                    {/* <TextField 
                         name="year"
                         variant="outlined"
                         label="Year"
@@ -90,7 +111,7 @@ const VehicleForm = ({classes,...props}) => {
                         onChange={handleInputChange}
                         error={true}
                         helperText={errors.year}
-                    />
+                    /> */}
                     <TextField 
                         name="make"
                         variant="outlined"

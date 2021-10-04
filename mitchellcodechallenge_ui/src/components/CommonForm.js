@@ -5,7 +5,10 @@ const CommonForm = (initialFieldValues,validate,setCurrentId) =>{
     const [errors,setErrors] = useState({})
 
     const handleInputChange = e => {
+        //console.log('yearSelection', e.target)
+
         const {name,value} = e.target
+      
         setValues({
             ...values,
             [name] : value

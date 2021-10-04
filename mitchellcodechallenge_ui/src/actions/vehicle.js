@@ -25,11 +25,16 @@ export const fetchAll = () => dispatch => {
 }
 
 const formatData = data => ({
+
     ...data,
     year:parseInt(data.year?data.year:0)
+
 })
 
 export const create = (data,onSuccess) => dispatch => {
+    //console.log(data)
+
+    data.year= data.year.toString().split(" ")[3]
     data=formatData(data)
     api.vehicle().create(data)
     .then(res=>{
@@ -43,6 +48,8 @@ export const create = (data,onSuccess) => dispatch => {
 }
 
 export const update = (id,data,onSuccess) => dispatch => {
+    data.year= data.year.toString().split(" ")[3]
+
     data=formatData(data)
     api.vehicle().update(id,data)
     .then(res=>{
@@ -56,7 +63,6 @@ export const update = (id,data,onSuccess) => dispatch => {
 }
 
 export const deleteRecord = (id,onSuccess) => dispatch => {
-  //  data=formatData(data)
     api.vehicle().delete(id)
     .then(res=>{
         dispatch({
